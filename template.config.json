@@ -1,0 +1,15 @@
+[
+  {
+    "id": "Unique ID",
+    "url": "Endpoint url",
+    "name": "Endpoint name",
+    "repos": [
+      {
+        "id": "Unique ID",
+        "url": "Repo url",
+        "name": "Name of the repo"
+      }
+    ],
+    "token": "Token ID"
+  }
+]

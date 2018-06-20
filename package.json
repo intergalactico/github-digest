@@ -1,0 +1,26 @@
+{
+  "name": "gdigest",
+  "version": "0.0.1",
+  "description": "CLI tool to gather information from GitHub repositories",
+  "main": "./bin/script.js",
+  "bin": {
+    "gd": "./bin/script.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nikita Sherbakov",
+  "license": "MIT",
+  "preferGlobal": true,
+  "dependencies": {
+    "@types/jsonfile": "^4.0.1",
+    "@types/yargs": "^11.0.0",
+    "jsonfile": "^4.0.0",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.3.4",
+    "typescript": "^2.9.2"
+  }
+}
