@@ -38,11 +38,19 @@ export default class Base {
     });
 
     if (isAPI) {
-      return jsonfile.writeFileSync(path, config.concat([options]));
+      try {
+        // It should send a test request to check the token before add it to the file
+        // Not sure that it is possible. Need to investigate
+        jsonfile.writeFileSync(path, config.concat([options]));
+        return console.log(`New API ENDPOINT added successfully`);
+      } catch (err) {
+        console.log("Something went wrong");
+        throw err;
+      }
     }
 
     if (!isNameFound) {
-      return console.log("API name doesn't exist");
+      return console.log("Wrong API name");
     }
 
     const newConfig = config.map((endpoint: IOptions) => {
@@ -53,7 +61,15 @@ export default class Base {
       return endpoint;
     });
 
-    return jsonfile.writeFileSync(path, newConfig);
+    try {
+      // It should send a test request to check the access
+      // Not sure that it is possible. Need to investigate
+      jsonfile.writeFileSync(path, newConfig);
+      return console.log(`New REPO added successfully`);
+    } catch (err) {
+      console.log("Something went wrong");
+      throw err;
+    }
   }
 
   static add(command: string, options: IOptions): void {

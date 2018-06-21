@@ -3,34 +3,34 @@ import ys from "yargs";
 export default ys
   .command("api", "Add an API endpoint", {
     url: {
-      describe: "Define endpoint url",
+      describe: "Defines endpoint url",
       demand: true,
       alias: "u"
     },
     name: {
-      describe: "Define name/alias",
+      describe: "Defines name/alias",
       demand: true,
       alias: "n"
     },
     token: {
-      describe: "Define token to get access to API",
+      describe: "Defines token to get access to API",
       demand: true,
       alias: "t"
     }
   })
   .command("repo", "Add a repo to the existing endpoint", {
     url: {
-      describe: "Define repo url",
+      describe: "Defines repo url",
       demand: true,
       alias: "u"
     },
     name: {
-      describe: "Define name/alias",
+      describe: "Defines repo name",
       demand: true,
       alias: "n"
     },
     api: {
-      describe: "Define api name",
+      describe: "Defines related api name",
       demand: true,
       alias: "a"
     }
