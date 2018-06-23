@@ -21,6 +21,9 @@ switch (command) {
   case consts.LIST:
     Controller.list();
     break;
+  case consts.FETCH:
+    Controller.fetch(commands);
+    break;
   default:
     hs.errorMsg(
       "Command doesn't exist. Use `--help` to get a list of available commands"

@@ -54,7 +54,7 @@ export default class Model {
     const newRepo = {
       id: params.id,
       name: params.name,
-      url: params.url
+      org: params.org
     };
     const endpointIndex = this.database.findIndex(endpoint => {
       return endpoint.name === params.endpoint;

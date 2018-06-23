@@ -1,5 +1,6 @@
 export default {
   ENDPOINT: "endpoint",
   REPO: "repo",
-  LIST: "list"
+  LIST: "list",
+  FETCH: "fetch"
 };

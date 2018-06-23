@@ -7,7 +7,7 @@
     "repos": [
       {
         "id": "Unique ID",
-        "url": "Repo url",
+        "org": "Repo url",
         "name": "Name of the repo"
       }
     ]

@@ -2,6 +2,23 @@ import ys from "yargs";
 
 export default ys
   .command("list", "Show list of all entities")
+  .command("fetch", "Fetch repo information", {
+    repo: {
+      describe: "Repo name",
+      alias: "r",
+      demand: true
+    },
+    commit: {
+      describe: "Number of last commits",
+      alias: "c",
+      number: true
+    },
+    pull: {
+      describe: "Number of last pull requests",
+      alias: "p",
+      number: true
+    }
+  })
   .command("endpoint", "Add an API endpoint", {
     url: {
       describe: "Defines endpoint url",
@@ -20,10 +37,10 @@ export default ys
     }
   })
   .command("repo", "Add a repo to the existing endpoint", {
-    url: {
-      describe: "Defines repo url",
+    org: {
+      describe: "Defines repo organization",
       demand: true,
-      alias: "u"
+      alias: "o"
     },
     name: {
       describe: "Defines repo name",
