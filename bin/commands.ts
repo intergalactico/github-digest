@@ -1,7 +1,8 @@
 import ys from "yargs";
 
 export default ys
-  .command("api", "Add an API endpoint", {
+  .command("list", "Show list of all entities")
+  .command("endpoint", "Add an API endpoint", {
     url: {
       describe: "Defines endpoint url",
       demand: true,
@@ -29,10 +30,10 @@ export default ys
       demand: true,
       alias: "n"
     },
-    api: {
-      describe: "Defines related api name",
+    endpoint: {
+      describe: "Defines related endpoint name",
       demand: true,
-      alias: "a"
+      alias: "e"
     }
   })
   .help().argv;

@@ -1,4 +1,4 @@
 /node_modules/
 bin/**/*.js
 lib/**/*.js
-config.json
+db.json

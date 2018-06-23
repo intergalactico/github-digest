@@ -3,13 +3,13 @@
     "id": "Unique ID",
     "url": "Endpoint url",
     "name": "Endpoint name",
+    "token": "Token ID",
     "repos": [
       {
         "id": "Unique ID",
         "url": "Repo url",
         "name": "Name of the repo"
       }
-    ],
-    "token": "Token ID"
+    ]
   }
 ]

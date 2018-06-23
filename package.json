@@ -2,9 +2,9 @@
   "name": "gdigest",
   "version": "0.0.1",
   "description": "CLI tool to gather information from GitHub repositories",
-  "main": "./bin/script.js",
+  "main": "./bin/index.js",
   "bin": {
-    "gd": "./bin/script.js"
+    "gd": "./bin/index.js"
   },
   "scripts": {
     "dev": "tsc -w",
@@ -15,8 +15,12 @@
   "license": "MIT",
   "preferGlobal": true,
   "dependencies": {
+    "@types/cli-table": "^0.3.0",
+    "@types/colors": "^1.2.1",
     "@types/jsonfile": "^4.0.1",
     "@types/yargs": "^11.0.0",
+    "cli-table": "^0.3.1",
+    "colors": "^1.3.0",
     "jsonfile": "^4.0.0",
     "yargs": "^11.0.0"
   },
