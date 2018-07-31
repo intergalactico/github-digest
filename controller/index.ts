@@ -1,33 +1,55 @@
-import fs from "fs";
-import * as hs from "../helpers";
+import uuid from "uuid/v4";
 import Model from "../model";
+import View from "../view";
+import * as ts from "../types";
 import consts from "../consts";
 
-const db = new Model();
+const model = new Model();
 
 export default class Controller {
-  static createDatabaseFile(path: string): void {
-    try {
-      fs.appendFileSync(path, "[]");
-      hs.successMsg("New database has been created");
-    } catch (err) {
-      hs.errorMsg("Something went wrong");
-      throw err;
-    }
-  }
-
   static list(): void {
-    db.listAll();
+    const endpoints: ts.Endpoint[] = model.list();
+    View.renderAll(endpoints);
   }
 
-  static new(type, params) {
-    switch (type) {
-      case consts.ENDPOINT:
-        return db.addEndpoint(params);
-      case consts.REPO:
-        return db.addRepo(params);
-      default:
-        break;
+  static add(type: string, options: any): void {
+    let params: ts.Repo | ts.Endpoint;
+    if (!type) {
+      View.displayError(
+        "Oops! Seems that you forgot to specify what you want to add. Use `add --help` to get a list of options"
+      );
     }
+
+    const endpoint = model.getEndpoints(options.endpoint);
+    if (!endpoint) View.displayError("Endpoint doesn't exist");
+
+    switch (type.toLowerCase()) {
+      case consts.REPO:
+        params = {
+          id: uuid(),
+          name: options.name,
+          org: options.org,
+          endpointId: endpoint.id
+        };
+        break;
+
+      case consts.ENDPOINT:
+        params = {
+          id: uuid(),
+          name: options.name,
+          url: options.url,
+          token: options.token
+        };
+        break;
+
+      default:
+        return View.displayError(
+          "Subcommand doesn't exist. Use `--help` to get a list of available options"
+        );
+    }
+
+    const isAdded: boolean = model.add(type, params);
+    if (!isAdded) View.displayError("Something went wrong!");
+    View.displaySuccess(`New ${type.toUpperCase()} has been added!`);
   }
 }

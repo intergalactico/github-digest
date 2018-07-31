@@ -1,15 +1,18 @@
-[
-  {
-    "id": "Unique ID",
-    "url": "Endpoint url",
-    "name": "Endpoint name",
-    "token": "Token ID",
-    "repos": [
-      {
-        "id": "Unique ID",
-        "org": "Repo url",
-        "name": "Name of the repo"
-      }
-    ]
-  }
-]
+{
+  "endpoints": [
+    {
+      "id": "Uniq id",
+      "name": "Custom endpoint name",
+      "url": "Endpoint url",
+      "token": "Authorized token"
+    }
+  ],
+  "repos": [
+    {
+      "id": "Uniq id",
+      "endpointId": "Endpoint foreign key",
+      "name": "Repo name",
+      "org": "Repo organization"
+    }
+  ]
+}

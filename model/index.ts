@@ -1,83 +1,38 @@
-import jsonfile from "jsonfile";
-import View from "../view";
-import * as hs from "../helpers";
+import low from "lowdb";
+import FileSync from "lowdb/adapters/FileSync";
+import * as ts from "../types";
 
-const defaultPath = `${__dirname}/../db.json`;
+// Set up a database
+const adapter = new FileSync(`${__dirname}/../db.json`);
+const db = low(adapter);
+db.defaults({ endpoints: [], repos: [] }).write();
 
 export default class Model {
-  private path: string;
-  constructor(path: string = defaultPath) {
-    this.path = path;
+  list(): ts.Endpoint[] {
+    const { endpoints, repos } = db.getState();
+    return endpoints.map((endpoint: ts.Endpoint) => ({
+      ...endpoint,
+      repos: repos.filter((repo: ts.Repo) => repo.endpointId === endpoint.id)
+    }));
   }
 
-  // Need to define return value. Array of objects.
-  get database() {
-    return jsonfile.readFileSync(this.path);
-  }
-
-  // Need to define a type of arg. Array of objects.
-  set database(updatedDatabase) {
-    jsonfile.writeFileSync(this.path, updatedDatabase);
-  }
-
-  listAll(): void {
-    View.renderAllEndpoints(this.database);
-  }
-
-  // Add arg type
-  addEndpoint(params): void {
-    const newEndpoint = {
-      id: params.id,
-      name: params.name,
-      url: params.url,
-      token: params.token,
-      repos: []
-    };
-
-    const isNameExists = this.database.find(
-      endpoint => endpoint.name === newEndpoint.name
-    );
-
-    if (isNameExists) return hs.errorMsg("Endpoint name already exists");
-
+  add(type: string, params: ts.Endpoint | ts.Repo): boolean {
     try {
-      this.database = [...this.database, newEndpoint];
-      return hs.successMsg(`New ENDPOINT added successfully`);
-    } catch (err) {
-      hs.errorMsg("Something went wrong");
-      throw err;
+      db.get(`${type.toLowerCase()}s`)
+        .push(params)
+        .write();
+      return true;
+    } catch (e) {
+      throw e;
     }
   }
 
-  // Add arg type
-  addRepo(params): void {
-    const newRepo = {
-      id: params.id,
-      name: params.name,
-      org: params.org
-    };
-    const endpointIndex = this.database.findIndex(endpoint => {
-      return endpoint.name === params.endpoint;
-    });
+  getEndpoints(name?: string) {
+    if (!name) return db.get(`endpoints`).value();
 
-    if (endpointIndex === -1) return hs.errorMsg("Wrong endpoint name");
-
-    const isRepoNameExists = this.database[endpointIndex].repos.find(
-      repo => repo.name === newRepo.name
-    );
-
-    if (isRepoNameExists) return hs.errorMsg("Repo name already exists");
-
-    try {
-      this.database = this.database.map((endpoint, i: number) => {
-        if (i !== endpointIndex) return endpoint;
-        endpoint.repos.push(newRepo);
-        return endpoint;
-      });
-      return hs.successMsg(`New REPO added successfully`);
-    } catch (err) {
-      hs.errorMsg("Something went wrong");
-      throw err;
-    }
+    return db
+      .get(`endpoints`)
+      .find(endpoint => endpoint.name === name)
+      .value();
   }
 }
